@@ -1,0 +1,146 @@
+
+mem_access.elf:     file format elf32-littleriscv
+
+
+Disassembly of section .plt:
+
+00010340 <_PROCEDURE_LINKAGE_TABLE_>:
+   10340:	97 23 00 00 33 03 c3 41 03 ae 83 cb 13 03 43 fd     .#..3..A......C.
+   10350:	93 82 83 cb 13 53 23 00 83 a2 42 00 67 00 0e 00     .....S#...B.g...
+
+00010360 <__libc_start_main@plt>:
+   10360:	00002e17          	auipc	t3,0x2
+   10364:	ca0e2e03          	lw	t3,-864(t3) # 12000 <__libc_start_main@GLIBC_2.34>
+   10368:	000e0367          	jalr	t1,t3
+   1036c:	00000013          	nop
+
+00010370 <printf@plt>:
+   10370:	00002e17          	auipc	t3,0x2
+   10374:	c94e2e03          	lw	t3,-876(t3) # 12004 <printf@GLIBC_2.33>
+   10378:	000e0367          	jalr	t1,t3
+   1037c:	00000013          	nop
+
+00010380 <free@plt>:
+   10380:	00002e17          	auipc	t3,0x2
+   10384:	c88e2e03          	lw	t3,-888(t3) # 12008 <free@GLIBC_2.33>
+   10388:	000e0367          	jalr	t1,t3
+   1038c:	00000013          	nop
+
+00010390 <malloc@plt>:
+   10390:	00002e17          	auipc	t3,0x2
+   10394:	c7ce2e03          	lw	t3,-900(t3) # 1200c <malloc@GLIBC_2.33>
+   10398:	000e0367          	jalr	t1,t3
+   1039c:	00000013          	nop
+
+Disassembly of section .text:
+
+000103a0 <main>:
+   103a0:	003d1537          	lui	a0,0x3d1
+   103a4:	1141                	addi	sp,sp,-16
+   103a6:	90050513          	addi	a0,a0,-1792 # 3d0900 <__global_pointer$+0x3be0f0>
+   103aa:	c606                	sw	ra,12(sp)
+   103ac:	c422                	sw	s0,8(sp)
+   103ae:	c04a                	sw	s2,0(sp)
+   103b0:	37c5                	jal	10390 <malloc@plt>
+   103b2:	842a                	mv	s0,a0
+   103b4:	003d1537          	lui	a0,0x3d1
+   103b8:	90050513          	addi	a0,a0,-1792 # 3d0900 <__global_pointer$+0x3be0f0>
+   103bc:	3fd1                	jal	10390 <malloc@plt>
+   103be:	892a                	mv	s2,a0
+   103c0:	003d1537          	lui	a0,0x3d1
+   103c4:	90050513          	addi	a0,a0,-1792 # 3d0900 <__global_pointer$+0x3be0f0>
+   103c8:	37e1                	jal	10390 <malloc@plt>
+   103ca:	c405                	beqz	s0,103f2 <main+0x52>
+   103cc:	02090363          	beqz	s2,103f2 <main+0x52>
+   103d0:	c226                	sw	s1,4(sp)
+   103d2:	84aa                	mv	s1,a0
+   103d4:	cd11                	beqz	a0,103f0 <main+0x50>
+   103d6:	8522                	mv	a0,s0
+   103d8:	3765                	jal	10380 <free@plt>
+   103da:	854a                	mv	a0,s2
+   103dc:	3755                	jal	10380 <free@plt>
+   103de:	8526                	mv	a0,s1
+   103e0:	3745                	jal	10380 <free@plt>
+   103e2:	4492                	lw	s1,4(sp)
+   103e4:	4501                	li	a0,0
+   103e6:	40b2                	lw	ra,12(sp)
+   103e8:	4422                	lw	s0,8(sp)
+   103ea:	4902                	lw	s2,0(sp)
+   103ec:	0141                	addi	sp,sp,16
+   103ee:	8082                	ret
+   103f0:	4492                	lw	s1,4(sp)
+   103f2:	00000517          	auipc	a0,0x0
+   103f6:	0a650513          	addi	a0,a0,166 # 10498 <_IO_stdin_used+0x4>
+   103fa:	3f9d                	jal	10370 <printf@plt>
+   103fc:	4505                	li	a0,1
+   103fe:	b7e5                	j	103e6 <main+0x46>
+
+00010400 <_start>:
+   10400:	2005                	jal	10420 <load_gp>
+   10402:	87aa                	mv	a5,a0
+   10404:	00000517          	auipc	a0,0x0
+   10408:	01a50513          	addi	a0,a0,26 # 1041e <__wrap_main>
+   1040c:	4582                	lw	a1,0(sp)
+   1040e:	0050                	addi	a2,sp,4
+   10410:	ff017113          	andi	sp,sp,-16
+   10414:	4681                	li	a3,0
+   10416:	4701                	li	a4,0
+   10418:	880a                	mv	a6,sp
+   1041a:	3799                	jal	10360 <__libc_start_main@plt>
+   1041c:	9002                	ebreak
+
+0001041e <__wrap_main>:
+   1041e:	b749                	j	103a0 <main>
+
+00010420 <load_gp>:
+   10420:	00002197          	auipc	gp,0x2
+   10424:	3f018193          	addi	gp,gp,1008 # 12810 <__global_pointer$>
+   10428:	8082                	ret
+	...
+
+0001042c <deregister_tm_clones>:
+   1042c:	6549                	lui	a0,0x12
+   1042e:	6749                	lui	a4,0x12
+   10430:	01050793          	addi	a5,a0,16 # 12010 <__TMC_END__>
+   10434:	01070713          	addi	a4,a4,16 # 12010 <__TMC_END__>
+   10438:	00f70863          	beq	a4,a5,10448 <deregister_tm_clones+0x1c>
+   1043c:	00000793          	li	a5,0
+   10440:	c781                	beqz	a5,10448 <deregister_tm_clones+0x1c>
+   10442:	01050513          	addi	a0,a0,16
+   10446:	8782                	jr	a5
+   10448:	8082                	ret
+
+0001044a <register_tm_clones>:
+   1044a:	6549                	lui	a0,0x12
+   1044c:	01050793          	addi	a5,a0,16 # 12010 <__TMC_END__>
+   10450:	6749                	lui	a4,0x12
+   10452:	01070593          	addi	a1,a4,16 # 12010 <__TMC_END__>
+   10456:	8d9d                	sub	a1,a1,a5
+   10458:	4025d793          	srai	a5,a1,0x2
+   1045c:	81fd                	srli	a1,a1,0x1f
+   1045e:	95be                	add	a1,a1,a5
+   10460:	8585                	srai	a1,a1,0x1
+   10462:	c599                	beqz	a1,10470 <register_tm_clones+0x26>
+   10464:	00000793          	li	a5,0
+   10468:	c781                	beqz	a5,10470 <register_tm_clones+0x26>
+   1046a:	01050513          	addi	a0,a0,16
+   1046e:	8782                	jr	a5
+   10470:	8082                	ret
+
+00010472 <__do_global_dtors_aux>:
+   10472:	1141                	addi	sp,sp,-16
+   10474:	c422                	sw	s0,8(sp)
+   10476:	6449                	lui	s0,0x12
+   10478:	01444783          	lbu	a5,20(s0) # 12014 <completed.0>
+   1047c:	c606                	sw	ra,12(sp)
+   1047e:	e789                	bnez	a5,10488 <__do_global_dtors_aux+0x16>
+   10480:	3775                	jal	1042c <deregister_tm_clones>
+   10482:	4785                	li	a5,1
+   10484:	00f40a23          	sb	a5,20(s0)
+   10488:	40b2                	lw	ra,12(sp)
+   1048a:	4422                	lw	s0,8(sp)
+   1048c:	0141                	addi	sp,sp,16
+   1048e:	8082                	ret
+
+00010490 <frame_dummy>:
+   10490:	bf6d                	j	1044a <register_tm_clones>
