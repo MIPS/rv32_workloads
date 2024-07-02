@@ -34,113 +34,169 @@ Disassembly of section .plt:
 
 Disassembly of section .text:
 
-000103a0 <main>:
-   103a0:	003d1537          	lui	a0,0x3d1
-   103a4:	1141                	addi	sp,sp,-16
-   103a6:	90050513          	addi	a0,a0,-1792 # 3d0900 <__global_pointer$+0x3be0f0>
-   103aa:	c606                	sw	ra,12(sp)
-   103ac:	c422                	sw	s0,8(sp)
-   103ae:	c04a                	sw	s2,0(sp)
-   103b0:	37c5                	jal	10390 <malloc@plt>
-   103b2:	842a                	mv	s0,a0
-   103b4:	003d1537          	lui	a0,0x3d1
-   103b8:	90050513          	addi	a0,a0,-1792 # 3d0900 <__global_pointer$+0x3be0f0>
-   103bc:	3fd1                	jal	10390 <malloc@plt>
-   103be:	892a                	mv	s2,a0
-   103c0:	003d1537          	lui	a0,0x3d1
-   103c4:	90050513          	addi	a0,a0,-1792 # 3d0900 <__global_pointer$+0x3be0f0>
-   103c8:	37e1                	jal	10390 <malloc@plt>
-   103ca:	c405                	beqz	s0,103f2 <main+0x52>
-   103cc:	02090363          	beqz	s2,103f2 <main+0x52>
-   103d0:	c226                	sw	s1,4(sp)
-   103d2:	84aa                	mv	s1,a0
-   103d4:	cd11                	beqz	a0,103f0 <main+0x50>
-   103d6:	8522                	mv	a0,s0
-   103d8:	3765                	jal	10380 <free@plt>
-   103da:	854a                	mv	a0,s2
-   103dc:	3755                	jal	10380 <free@plt>
-   103de:	8526                	mv	a0,s1
-   103e0:	3745                	jal	10380 <free@plt>
-   103e2:	4492                	lw	s1,4(sp)
-   103e4:	4501                	li	a0,0
-   103e6:	40b2                	lw	ra,12(sp)
-   103e8:	4422                	lw	s0,8(sp)
-   103ea:	4902                	lw	s2,0(sp)
-   103ec:	0141                	addi	sp,sp,16
-   103ee:	8082                	ret
-   103f0:	4492                	lw	s1,4(sp)
-   103f2:	00000517          	auipc	a0,0x0
-   103f6:	0a650513          	addi	a0,a0,166 # 10498 <_IO_stdin_used+0x4>
-   103fa:	3f9d                	jal	10370 <printf@plt>
-   103fc:	4505                	li	a0,1
-   103fe:	b7e5                	j	103e6 <main+0x46>
+000103a0 <_start>:
+   103a0:	2005                	jal	103c0 <load_gp>
+   103a2:	87aa                	mv	a5,a0
+   103a4:	00000517          	auipc	a0,0x0
+   103a8:	01a50513          	addi	a0,a0,26 # 103be <__wrap_main>
+   103ac:	4582                	lw	a1,0(sp)
+   103ae:	0050                	addi	a2,sp,4
+   103b0:	ff017113          	andi	sp,sp,-16
+   103b4:	4681                	li	a3,0
+   103b6:	4701                	li	a4,0
+   103b8:	880a                	mv	a6,sp
+   103ba:	375d                	jal	10360 <__libc_start_main@plt>
+   103bc:	9002                	ebreak
 
-00010400 <_start>:
-   10400:	2005                	jal	10420 <load_gp>
-   10402:	87aa                	mv	a5,a0
-   10404:	00000517          	auipc	a0,0x0
-   10408:	01a50513          	addi	a0,a0,26 # 1041e <__wrap_main>
-   1040c:	4582                	lw	a1,0(sp)
-   1040e:	0050                	addi	a2,sp,4
-   10410:	ff017113          	andi	sp,sp,-16
-   10414:	4681                	li	a3,0
-   10416:	4701                	li	a4,0
-   10418:	880a                	mv	a6,sp
-   1041a:	3799                	jal	10360 <__libc_start_main@plt>
-   1041c:	9002                	ebreak
+000103be <__wrap_main>:
+   103be:	a895                	j	10432 <main>
 
-0001041e <__wrap_main>:
-   1041e:	b749                	j	103a0 <main>
-
-00010420 <load_gp>:
-   10420:	00002197          	auipc	gp,0x2
-   10424:	3f018193          	addi	gp,gp,1008 # 12810 <__global_pointer$>
-   10428:	8082                	ret
+000103c0 <load_gp>:
+   103c0:	00002197          	auipc	gp,0x2
+   103c4:	45018193          	addi	gp,gp,1104 # 12810 <__global_pointer$>
+   103c8:	8082                	ret
 	...
 
-0001042c <deregister_tm_clones>:
-   1042c:	6549                	lui	a0,0x12
-   1042e:	6749                	lui	a4,0x12
-   10430:	01050793          	addi	a5,a0,16 # 12010 <__TMC_END__>
-   10434:	01070713          	addi	a4,a4,16 # 12010 <__TMC_END__>
-   10438:	00f70863          	beq	a4,a5,10448 <deregister_tm_clones+0x1c>
-   1043c:	00000793          	li	a5,0
-   10440:	c781                	beqz	a5,10448 <deregister_tm_clones+0x1c>
-   10442:	01050513          	addi	a0,a0,16
-   10446:	8782                	jr	a5
-   10448:	8082                	ret
+000103cc <deregister_tm_clones>:
+   103cc:	6549                	lui	a0,0x12
+   103ce:	6749                	lui	a4,0x12
+   103d0:	01050793          	addi	a5,a0,16 # 12010 <__TMC_END__>
+   103d4:	01070713          	addi	a4,a4,16 # 12010 <__TMC_END__>
+   103d8:	00f70863          	beq	a4,a5,103e8 <deregister_tm_clones+0x1c>
+   103dc:	00000793          	li	a5,0
+   103e0:	c781                	beqz	a5,103e8 <deregister_tm_clones+0x1c>
+   103e2:	01050513          	addi	a0,a0,16
+   103e6:	8782                	jr	a5
+   103e8:	8082                	ret
 
-0001044a <register_tm_clones>:
-   1044a:	6549                	lui	a0,0x12
-   1044c:	01050793          	addi	a5,a0,16 # 12010 <__TMC_END__>
-   10450:	6749                	lui	a4,0x12
-   10452:	01070593          	addi	a1,a4,16 # 12010 <__TMC_END__>
-   10456:	8d9d                	sub	a1,a1,a5
-   10458:	4025d793          	srai	a5,a1,0x2
-   1045c:	81fd                	srli	a1,a1,0x1f
-   1045e:	95be                	add	a1,a1,a5
-   10460:	8585                	srai	a1,a1,0x1
-   10462:	c599                	beqz	a1,10470 <register_tm_clones+0x26>
-   10464:	00000793          	li	a5,0
-   10468:	c781                	beqz	a5,10470 <register_tm_clones+0x26>
-   1046a:	01050513          	addi	a0,a0,16
-   1046e:	8782                	jr	a5
-   10470:	8082                	ret
+000103ea <register_tm_clones>:
+   103ea:	6549                	lui	a0,0x12
+   103ec:	01050793          	addi	a5,a0,16 # 12010 <__TMC_END__>
+   103f0:	6749                	lui	a4,0x12
+   103f2:	01070593          	addi	a1,a4,16 # 12010 <__TMC_END__>
+   103f6:	8d9d                	sub	a1,a1,a5
+   103f8:	4025d793          	srai	a5,a1,0x2
+   103fc:	81fd                	srli	a1,a1,0x1f
+   103fe:	95be                	add	a1,a1,a5
+   10400:	8585                	srai	a1,a1,0x1
+   10402:	c599                	beqz	a1,10410 <register_tm_clones+0x26>
+   10404:	00000793          	li	a5,0
+   10408:	c781                	beqz	a5,10410 <register_tm_clones+0x26>
+   1040a:	01050513          	addi	a0,a0,16
+   1040e:	8782                	jr	a5
+   10410:	8082                	ret
 
-00010472 <__do_global_dtors_aux>:
-   10472:	1141                	addi	sp,sp,-16
-   10474:	c422                	sw	s0,8(sp)
-   10476:	6449                	lui	s0,0x12
-   10478:	01444783          	lbu	a5,20(s0) # 12014 <completed.0>
-   1047c:	c606                	sw	ra,12(sp)
-   1047e:	e789                	bnez	a5,10488 <__do_global_dtors_aux+0x16>
-   10480:	3775                	jal	1042c <deregister_tm_clones>
-   10482:	4785                	li	a5,1
-   10484:	00f40a23          	sb	a5,20(s0)
-   10488:	40b2                	lw	ra,12(sp)
-   1048a:	4422                	lw	s0,8(sp)
-   1048c:	0141                	addi	sp,sp,16
-   1048e:	8082                	ret
+00010412 <__do_global_dtors_aux>:
+   10412:	1141                	addi	sp,sp,-16
+   10414:	c422                	sw	s0,8(sp)
+   10416:	6449                	lui	s0,0x12
+   10418:	01444783          	lbu	a5,20(s0) # 12014 <completed.0>
+   1041c:	c606                	sw	ra,12(sp)
+   1041e:	e789                	bnez	a5,10428 <__do_global_dtors_aux+0x16>
+   10420:	3775                	jal	103cc <deregister_tm_clones>
+   10422:	4785                	li	a5,1
+   10424:	00f40a23          	sb	a5,20(s0)
+   10428:	40b2                	lw	ra,12(sp)
+   1042a:	4422                	lw	s0,8(sp)
+   1042c:	0141                	addi	sp,sp,16
+   1042e:	8082                	ret
 
-00010490 <frame_dummy>:
-   10490:	bf6d                	j	1044a <register_tm_clones>
+00010430 <frame_dummy>:
+   10430:	bf6d                	j	103ea <register_tm_clones>
+
+00010432 <main>:
+   10432:	7179                	addi	sp,sp,-48
+   10434:	d606                	sw	ra,44(sp)
+   10436:	d422                	sw	s0,40(sp)
+   10438:	1800                	addi	s0,sp,48
+   1043a:	003d17b7          	lui	a5,0x3d1
+   1043e:	90078513          	addi	a0,a5,-1792 # 3d0900 <__global_pointer$+0x3be0f0>
+   10442:	37b9                	jal	10390 <malloc@plt>
+   10444:	87aa                	mv	a5,a0
+   10446:	fef42223          	sw	a5,-28(s0)
+   1044a:	003d17b7          	lui	a5,0x3d1
+   1044e:	90078513          	addi	a0,a5,-1792 # 3d0900 <__global_pointer$+0x3be0f0>
+   10452:	3f3d                	jal	10390 <malloc@plt>
+   10454:	87aa                	mv	a5,a0
+   10456:	fef42023          	sw	a5,-32(s0)
+   1045a:	003d17b7          	lui	a5,0x3d1
+   1045e:	90078513          	addi	a0,a5,-1792 # 3d0900 <__global_pointer$+0x3be0f0>
+   10462:	373d                	jal	10390 <malloc@plt>
+   10464:	87aa                	mv	a5,a0
+   10466:	fcf42e23          	sw	a5,-36(s0)
+   1046a:	fe442783          	lw	a5,-28(s0)
+   1046e:	c799                	beqz	a5,1047c <main+0x4a>
+   10470:	fe042783          	lw	a5,-32(s0)
+   10474:	c781                	beqz	a5,1047c <main+0x4a>
+   10476:	fdc42783          	lw	a5,-36(s0)
+   1047a:	e799                	bnez	a5,10488 <main+0x56>
+   1047c:	67c1                	lui	a5,0x10
+   1047e:	55478513          	addi	a0,a5,1364 # 10554 <_IO_stdin_used+0x4>
+   10482:	35fd                	jal	10370 <printf@plt>
+   10484:	4785                	li	a5,1
+   10486:	a87d                	j	10544 <main+0x112>
+   10488:	fe042623          	sw	zero,-20(s0)
+   1048c:	a099                	j	104d2 <main+0xa0>
+   1048e:	fec42783          	lw	a5,-20(s0)
+   10492:	00178713          	addi	a4,a5,1
+   10496:	fec42783          	lw	a5,-20(s0)
+   1049a:	078a                	slli	a5,a5,0x2
+   1049c:	fe442683          	lw	a3,-28(s0)
+   104a0:	97b6                	add	a5,a5,a3
+   104a2:	d00777d3          	fcvt.s.w	fa5,a4
+   104a6:	e39c                	fsw	fa5,0(a5)
+   104a8:	fec42783          	lw	a5,-20(s0)
+   104ac:	078a                	slli	a5,a5,0x2
+   104ae:	fe442703          	lw	a4,-28(s0)
+   104b2:	97ba                	add	a5,a5,a4
+   104b4:	639c                	flw	fa5,0(a5)
+   104b6:	fec42783          	lw	a5,-20(s0)
+   104ba:	078a                	slli	a5,a5,0x2
+   104bc:	fe042703          	lw	a4,-32(s0)
+   104c0:	97ba                	add	a5,a5,a4
+   104c2:	00f7f7d3          	fadd.s	fa5,fa5,fa5
+   104c6:	e39c                	fsw	fa5,0(a5)
+   104c8:	fec42783          	lw	a5,-20(s0)
+   104cc:	0785                	addi	a5,a5,1
+   104ce:	fef42623          	sw	a5,-20(s0)
+   104d2:	fec42703          	lw	a4,-20(s0)
+   104d6:	000f47b7          	lui	a5,0xf4
+   104da:	23f78793          	addi	a5,a5,575 # f423f <__global_pointer$+0xe1a2f>
+   104de:	fae7d8e3          	bge	a5,a4,1048e <main+0x5c>
+   104e2:	fe042423          	sw	zero,-24(s0)
+   104e6:	a82d                	j	10520 <main+0xee>
+   104e8:	fe842783          	lw	a5,-24(s0)
+   104ec:	078a                	slli	a5,a5,0x2
+   104ee:	fe442703          	lw	a4,-28(s0)
+   104f2:	97ba                	add	a5,a5,a4
+   104f4:	6398                	flw	fa4,0(a5)
+   104f6:	fe842783          	lw	a5,-24(s0)
+   104fa:	078a                	slli	a5,a5,0x2
+   104fc:	fe042703          	lw	a4,-32(s0)
+   10500:	97ba                	add	a5,a5,a4
+   10502:	639c                	flw	fa5,0(a5)
+   10504:	fe842783          	lw	a5,-24(s0)
+   10508:	078a                	slli	a5,a5,0x2
+   1050a:	fdc42703          	lw	a4,-36(s0)
+   1050e:	97ba                	add	a5,a5,a4
+   10510:	10f777d3          	fmul.s	fa5,fa4,fa5
+   10514:	e39c                	fsw	fa5,0(a5)
+   10516:	fe842783          	lw	a5,-24(s0)
+   1051a:	0785                	addi	a5,a5,1
+   1051c:	fef42423          	sw	a5,-24(s0)
+   10520:	fe842703          	lw	a4,-24(s0)
+   10524:	000f47b7          	lui	a5,0xf4
+   10528:	23f78793          	addi	a5,a5,575 # f423f <__global_pointer$+0xe1a2f>
+   1052c:	fae7dee3          	bge	a5,a4,104e8 <main+0xb6>
+   10530:	fe442503          	lw	a0,-28(s0)
+   10534:	35b1                	jal	10380 <free@plt>
+   10536:	fe042503          	lw	a0,-32(s0)
+   1053a:	3599                	jal	10380 <free@plt>
+   1053c:	fdc42503          	lw	a0,-36(s0)
+   10540:	3581                	jal	10380 <free@plt>
+   10542:	4781                	li	a5,0
+   10544:	853e                	mv	a0,a5
+   10546:	50b2                	lw	ra,44(sp)
+   10548:	5422                	lw	s0,40(sp)
+   1054a:	6145                	addi	sp,sp,48
+   1054c:	8082                	ret
