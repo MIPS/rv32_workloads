@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 
-#define ARRAY_SIZE 1000000
+#define ARRAY_SIZE 10000
 
 int main() {
 	uint32_t* A = (uint32_t*)malloc(ARRAY_SIZE*sizeof(uint32_t));
